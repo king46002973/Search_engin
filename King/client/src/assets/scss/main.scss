@@ -1,0 +1,283 @@
+// client/src/assets/scss/main.scss
+
+// ==================== 初始化设置 ====================
+// 基于变量的CSS重置 (不依赖第三方reset库)
+:root {
+  // 使用CSS变量增强主题切换能力
+  @each $name, $color in $theme-colors {
+    --color-#{$name}: #{$color};
+  }
+  --font-family-base: #{$font-family-base};
+  --font-size-base: #{$font-size-base};
+  --line-height-base: #{$line-height-base};
+  --body-bg: #{map-get($theme-default, "background")};
+  --body-color: #{map-get($theme-default, "text")};
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box; // 统一盒模型
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth; // 平滑滚动
+  font-size: $font-size-root;
+  text-size-adjust: 100%; // 防止iOS字体缩放
+}
+
+body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--body-color);
+  background-color: var(--body-bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+// ==================== 基础元素样式 ====================
+// 排版系统
+h1, h2, h3, h4, h5, h6 {
+  margin-top: spacer(3);
+  margin-bottom: spacer(2);
+  font-weight: $font-weight-bold;
+  line-height: map-get($line-height-scale, "tight");
+}
+
+@for $i from 1 through 6 {
+  h#{$i} {
+    font-size: map-get($font-size-scale, if($i < 3, "xxl", if($i < 5, "xl", "lg")));
+  }
+}
+
+p {
+  margin-bottom: spacer(2);
+}
+
+a {
+  color: theme-color("primary");
+  text-decoration: none;
+  transition: color $transition-base;
+
+  &:hover {
+    color: darken(theme-color("primary"), 10%);
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
+// ==================== 工具类生成 ====================
+// 边距工具类
+@each $prop, $abbrev in (margin: m, padding: p) {
+  @each $size, $length in $spacers {
+    .#{$abbrev}-#{$size} {
+      #{$prop}: $length !important;
+    }
+    .#{$abbrev}t-#{$size},
+    .#{$abbrev}y-#{$size} {
+      #{$prop}-top: $length !important;
+    }
+    .#{$abbrev}r-#{$size},
+    .#{$abbrev}x-#{$size} {
+      #{$prop}-right: $length !important;
+    }
+    .#{$abbrev}b-#{$size},
+    .#{$abbrev}y-#{$size} {
+      #{$prop}-bottom: $length !important;
+    }
+    .#{$abbrev}l-#{$size},
+    .#{$abbrev}x-#{$size} {
+      #{$prop}-left: $length !important;
+    }
+  }
+}
+
+// 文本工具类
+.text {
+  &-center { text-align: center !important; }
+  &-left { text-align: left !important; }
+  &-right { text-align: right !important; }
+  &-uppercase { text-transform: uppercase !important; }
+  &-lowercase { text-transform: lowercase !important; }
+  &-capitalize { text-transform: capitalize !important; }
+  
+  @each $name, $color in $theme-colors {
+    &-#{$name} { color: $color !important; }
+  }
+}
+
+// 背景工具类
+.bg {
+  @each $name, $color in $theme-colors {
+    &-#{$name} { background-color: $color !important; }
+  }
+}
+
+// ==================== 布局系统 ====================
+.container {
+  width: 100%;
+  padding-right: spacer(2);
+  padding-left: spacer(2);
+  margin-right: auto;
+  margin-left: auto;
+
+  @each $breakpoint, $width in $breakpoints {
+    @if $breakpoint != "xs" {
+      @include media-breakpoint-up($breakpoint) {
+        max-width: $width;
+      }
+    }
+  }
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: - spacer(2);
+  margin-left: - spacer(2);
+}
+
+.col {
+  flex: 1 0 0%;
+  padding-right: spacer(2);
+  padding-left: spacer(2);
+}
+
+// ==================== 组件基础样式 ====================
+// 按钮组件
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: spacer(2) spacer(3);
+  font-weight: $font-weight-medium;
+  line-height: $line-height-base;
+  color: color-yiq(theme-color("primary"));
+  background-color: theme-color("primary");
+  border: $border-width solid transparent;
+  border-radius: map-get($border-radius-scale, "md");
+  cursor: pointer;
+  transition: $transition-base;
+  user-select: none;
+
+  &:hover {
+    background-color: darken(theme-color("primary"), 5%);
+    box-shadow: map-get($box-shadow-scale, "sm");
+  }
+
+  &:disabled {
+    opacity: map-get($opacity-levels, "medium");
+    pointer-events: none;
+  }
+
+  // 按钮变体
+  @each $name, $color in $theme-colors {
+    &-#{$name} {
+      background-color: $color;
+      color: color-yiq($color);
+
+      &:hover {
+        background-color: darken($color, 5%);
+      }
+    }
+  }
+
+  // 按钮尺寸
+  &-sm {
+    padding: spacer(1) spacer(2);
+    font-size: map-get($font-size-scale, "sm");
+  }
+
+  &-lg {
+    padding: spacer(3) spacer(4);
+    font-size: map-get($font-size-scale, "lg");
+  }
+}
+
+// 卡片组件
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: $color-white;
+  border: $border-width solid $color-gray-300;
+  border-radius: map-get($border-radius-scale, "md");
+  box-shadow: map-get($box-shadow-scale, "sm");
+  overflow: hidden;
+
+  &-body {
+    flex: 1 1 auto;
+    padding: spacer(3);
+  }
+
+  &-title {
+    margin-bottom: spacer(2);
+    font-size: map-get($font-size-scale, "lg");
+  }
+}
+
+// ==================== 工具混合 ====================
+// 媒体查询混合
+@mixin media-breakpoint-up($name) {
+  $min: map-get($breakpoints, $name);
+  @if $min != 0 {
+    @media (min-width: $min) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-down($name) {
+  $max: map-get($breakpoints, $name) - 0.02px;
+  @media (max-width: $max) {
+    @content;
+  }
+}
+
+// 文字截断
+@mixin text-truncate() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// ==================== 主题切换 ====================
+[data-theme="dark"] {
+  --body-bg: #{map-get($theme-dark, "background")};
+  --body-color: #{map-get($theme-dark, "text")};
+}
+
+// ==================== 辅助类 ====================
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.visually-hidden-focusable {
+  @extend .sr-only;
+
+  &:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+}

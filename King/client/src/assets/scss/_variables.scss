@@ -1,0 +1,194 @@
+// client/src/assets/scss/_variables.scss
+
+// ==================== 颜色系统 ====================
+// 基础颜色命名采用功能性命名而非视觉描述
+$color-primary: #3366ff !default;
+$color-secondary: #6c757d !default;
+$color-success: #28a745 !default;
+$color-danger: #dc3545 !default;
+$color-warning: #ffc107 !default;
+$color-info: #17a2b8 !default;
+
+// 中性色阶 (基于WCAG对比度标准)
+$color-white: #ffffff !default;
+$color-gray-100: #f8f9fa !default;
+$color-gray-200: #e9ecef !default;
+$color-gray-300: #dee2e6 !default;
+$color-gray-400: #ced4da !default;
+$color-gray-500: #adb5bd !default;
+$color-gray-600: #6c757d !default;
+$color-gray-700: #495057 !default;
+$color-gray-800: #343a40 !default;
+$color-gray-900: #212529 !default;
+$color-black: #000000 !default;
+
+// 语义化颜色映射
+$theme-colors: (
+  "primary": $color-primary,
+  "secondary": $color-secondary,
+  "success": $color-success,
+  "danger": $color-danger,
+  "warning": $color-warning,
+  "info": $color-info,
+  "light": $color-gray-100,
+  "dark": $color-gray-800
+) !default;
+
+// 透明度控制
+$opacity-levels: (
+  "light": 0.8,
+  "medium": 0.5,
+  "dark": 0.3
+) !default;
+
+// ==================== 间距系统 ====================
+// 基于8pt网格系统
+$spacer: 1rem !default;
+$spacers: (
+  0: 0,
+  1: $spacer * 0.25,  // 4px
+  2: $spacer * 0.5,   // 8px
+  3: $spacer,         // 16px
+  4: $spacer * 1.5,   // 24px
+  5: $spacer * 3,     // 48px
+  6: $spacer * 4.5,   // 72px
+  7: $spacer * 6      // 96px
+) !default;
+
+// ==================== 排版系统 ====================
+// 字体栈 (优先系统字体，减少资源加载)
+$font-family-sans-serif: 
+  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 
+  "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji" !default;
+$font-family-monospace: 
+  SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace !default;
+$font-family-base: $font-family-sans-serif !default;
+
+// 基准字号 (rem基于16px)
+$font-size-root: 16px !default;
+$font-size-base: 1rem !default;
+$font-size-scale: (
+  "xs": $font-size-base * 0.75,   // 12px
+  "sm": $font-size-base * 0.875,  // 14px
+  "md": $font-size-base,          // 16px
+  "lg": $font-size-base * 1.25,   // 20px
+  "xl": $font-size-base * 1.5,    // 24px
+  "xxl": $font-size-base * 2      // 32px
+) !default;
+
+// 字重
+$font-weight-lighter: lighter !default;
+$font-weight-light: 300 !default;
+$font-weight-normal: 400 !default;
+$font-weight-medium: 500 !default;
+$font-weight-bold: 700 !default;
+$font-weight-bolder: bolder !default;
+
+// 行高
+$line-height-base: 1.5 !default;
+$line-height-scale: (
+  "tight": 1.25,
+  "normal": $line-height-base,
+  "loose": 1.75
+) !default;
+
+// ==================== 响应式断点 ====================
+// 移动优先断点 (基于常见设备分辨率)
+$breakpoints: (
+  "xs": 0,
+  "sm": 576px,
+  "md": 768px,
+  "lg": 992px,
+  "xl": 1200px,
+  "xxl": 1400px
+) !default;
+
+// ==================== 边框系统 ====================
+$border-width: 1px !default;
+$border-widths: (
+  "thin": $border-width * 0.5,
+  "base": $border-width,
+  "thick": $border-width * 2
+) !default;
+
+$border-radius: 0.25rem !default;
+$border-radius-scale: (
+  "sm": $border-radius * 0.5,
+  "md": $border-radius,
+  "lg": $border-radius * 2,
+  "pill": 50rem,
+  "circle": 50%
+) !default;
+
+// ==================== 阴影系统 ====================
+$box-shadow: 0 0.5rem 1rem rgba($color-black, 0.15) !default;
+$box-shadow-scale: (
+  "sm": 0 0.125rem 0.25rem rgba($color-black, 0.075),
+  "md": $box-shadow,
+  "lg": 0 1rem 3rem rgba($color-black, 0.175),
+  "inset": inset 0 1px 2px rgba($color-black, 0.075)
+) !default;
+
+// ==================== 过渡动画 ====================
+$transition-base: all 0.2s ease-in-out !default;
+$transition-fade: opacity 0.15s linear !default;
+$transition-collapse: height 0.35s ease !default;
+
+// ==================== Z-index 层级 ====================
+$zindex-levels: (
+  "dropdown": 1000,
+  "sticky": 1020,
+  "fixed": 1030,
+  "modal-backdrop": 1040,
+  "modal": 1050,
+  "popover": 1060,
+  "tooltip": 1070,
+  "toast": 1080
+) !default;
+
+// ==================== 主题配置 ====================
+// 默认主题
+$theme-default: (
+  "background": $color-white,
+  "text": $color-gray-900,
+  "border": $color-gray-300,
+  "primary": $color-primary,
+  "secondary": $color-secondary
+) !default;
+
+// 暗色主题
+$theme-dark: (
+  "background": $color-gray-900,
+  "text": $color-gray-100,
+  "border": $color-gray-700,
+  "primary": darken($color-primary, 10%),
+  "secondary": darken($color-secondary, 10%)
+) !default;
+
+// 当前激活主题
+$theme-active: $theme-default !default;
+
+// ==================== 工具函数 ====================
+// 颜色亮度计算
+@function color-yiq($color) {
+  $r: red($color);
+  $g: green($color);
+  $b: blue($color);
+  $yiq: (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+  @return if($yiq >= 150, $color-gray-900, $color-white);
+}
+
+// 获取主题色
+@function theme-color($key: "primary") {
+  @return map-get($theme-active, $key);
+}
+
+// 响应式断点获取
+@function breakpoint($key) {
+  @return map-get($breakpoints, $key);
+}
+
+// 间距获取
+@function spacer($key) {
+  @return map-get($spacers, $key);
+}
